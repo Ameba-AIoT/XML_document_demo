@@ -7,7 +7,7 @@
 - 📎 开发板购买链接：  
   - [🛒 淘宝](https://item.taobao.com/item.htm?id=904981157046)  
   - [📦 Amazon](https://www.amazon.com/-/zh/dp/B0FB33DT2C/)  
-- 📄 [芯片与模组详情](https://aiot.realmcu.com/cn/module/index.html)
+- 📄 [芯片与模组详情](https://aiot.realmcu.com/zh/module/rtl8721dx.html)
 
 ---
 
@@ -20,53 +20,31 @@
 
 ### 快速开始
 
-1️⃣ **环境准备（选择 SDK）**  
+1️⃣ **选择SDK**  
+   - 设置`env.sh`（`env.bat`）路径：`source {sdk}/env.sh`  
+   - 将`{sdk}`替换为[ameba-rtos SDK](https://github.com/Ameba-AIoT/ameba-rtos)根目录中`env.sh`的绝对路径。如果SDK路径没有改变，此步骤仅需执行一次。
 
-- 配置 `env.sh`（或 Windows 下的 `env.bat`）路径：  
-  ```bash
-  source {sdk}/env.sh
-  ```  
-- 将 `{sdk}` 替换为 [ameba-rtos SDK](https://github.com/Ameba-AIoT/ameba-rtos) 根目录中 `env.sh` 的**绝对路径**。  
-- 如果 SDK 路径没有改变，此步骤只需要执行一次。
+   ⚡ **注意**：本示例仅支持 SDK 版本 **≥ v1.2**
 
-⚡ **注意**：本示例仅支持 SDK 版本 **≥ v1.2**。
+2️⃣ **编译**  
+   - 在当前工程目录下执行：  
+     ```bash
+     source env.sh
+     ameba.py build -p
+     ```
 
----
+3️⃣ **烧录固件**
+   >请将命令中的 `COMx` 替换为实际串口号（例如 `COM5`）
+   ```bash
+   ameba.py flash --p COMx --image km4_boot_all.bin 0x08000000 0x8014000 --image km0_km4_app.bin 0x08014000 0x8200000
+   ```
+   ⚡ **Note**: 项目目录中提供的预编译bin文件也可以用如下方式烧录：
+   ```bash
+   ameba.py flash --p COMx --image ../km4_boot_all.bin 0x08000000 0x8014000 --image ../km0_km4_app.bin 0x08014000 0x8200000
+   ```
 
-2️⃣ **编译示例工程**  
-
-在当前工程根目录下执行：  
-
-```bash
-source env.sh
-ameba.py build
-```
-
----
-
-3️⃣ **烧录固件**  
-
-⚡ **提醒**：项目目录中提供了预编译的bin文件，可以直接使用以下方式烧录：  
-
-```bash
-ameba.py flash --p COMx \
-  --image km4_boot_all.bin 0x08000000 0x8014000 \
-  --image km0_km4_app.bin 0x08014000 0x8200000
-```
-
-请将命令中的 `COMx` 替换为实际串口号（例如 `COM5`）。
-
----
-
-4️⃣ **打开串口监视器**  
-
-使用以下命令查看运行日志输出：  
-
-```bash
-ameba.py monitor --port COM5 --b 1500000
-```
-
-如需更换串口号，请将 `COM5` 修改为实际端口。
+4️⃣ **打开串口监视**  
+   - `ameba.py monitor --port COMx --b 1500000`
 
 ---
 

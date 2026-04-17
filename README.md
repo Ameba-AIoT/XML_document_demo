@@ -8,7 +8,7 @@
 - 📎 Development board purchase links:  
   - [🛒 Taobao](https://item.taobao.com/item.htm?id=904981157046)  
   - [📦 Amazon](https://www.amazon.com/-/zh/dp/B0FB33DT2C/)  
-- 📄 [Chip & module information](https://aiot.realmcu.com/cn/module/index.html)
+- 📄 [Chip & module information](https://aiot.realmcu.com/zh/module/rtl8721dx.html)
 
 ---
 
@@ -21,57 +21,32 @@
 
 ### Getting Started
 
-1️⃣ **Environment Setup (Select SDK)**  
+1️⃣ **Select SDK**  
+   - Set the path for `env.sh` (`env.bat`): `source {sdk}/env.sh`  
+   - Replace `{sdk}` with the absolute path to `env.sh` in the root directory of the [ameba-rtos SDK](https://github.com/Ameba-AIoT/ameba-rtos). This step only needs to be performed once if the SDK path remains unchanged.
 
-- Configure the path to `env.sh` (or `env.bat` on Windows):
+2️⃣ **Build**  
+   - Execute the following in the demo example directory:  
+     ```bash
+     source env.sh
+     ameba.py build -p
+     ```
 
-  ```bash
-  source {sdk}/env.sh
-  ```
-
-- Replace `{sdk}` with the **absolute path** to `env.sh` in the root directory of the [ameba-rtos SDK](https://github.com/Ameba-AIoT/ameba-rtos).  
-- If the SDK path does not change, this step only needs to be done once.
-
-⚡ **Note**: This example requires SDK version **≥ v1.2**.
-
----
-
-2️⃣ **Build the Example**
-
-In the project root directory, run:
+3️⃣ **Burning the Firmware**  
+   > Replace `COMx` with your actual serial port (for example, `COM5`).
 
 ```bash
-source env.sh
-ameba.py build
+ameba.py flash --p COMx --image km4_boot_all.bin 0x08000000 0x8014000 --image km0_km4_app.bin 0x08014000 0x8200000
 ```
 
----
-
-3️⃣ **Flash the Firmware**
-
-⚡ **Note**: Prebuilt binary files are provided in the project directory. If you do not need to modify the code, you can directly flash them with:
+ ⚡ **Note**: Precompiled bin files are also provided in the project directory and can be flashed as follows:
 
 ```bash
-ameba.py flash --p COMx \
-  --image km4_boot_all.bin 0x08000000 0x8014000 \
-  --image km0_km4_app.bin 0x08014000 0x8200000
+ameba.py flash --p COMx --image ../km4_boot_all.bin 0x08000000 0x8014000 --image ../km0_km4_app.bin 0x08014000 0x8200000
 ```
 
-Replace `COMx` with your actual serial port (for example, `COM5`).
-
----
-
-4️⃣ **Open Serial Monitor**
-
-Use the following command to view runtime logs:
-
-```bash
-ameba.py monitor --port COM5 --b 1500000
-```
-
-Change `COM5` to the actual port as needed.
-
----
+4️⃣ **Monitor**  
+   - `ameba.py monitor --port COMx --b 1500000`
 
 5️⃣ **Check the Log Output** 📜  
 
